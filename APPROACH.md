@@ -26,9 +26,12 @@ Template for each task:
 ## Task 1 — Mint and transfer an SPL token
 
 ### Before
+- spl_init creates an SPL token mint. THe signature authorizes the creation of a keypair that can be used to create a mint account.
+- The mint account needs to know the size determind by the token program.
+- the person establishing the account pays the rent, and it is received by the account owner. 
 
 ### After
-
+Successfully created both instructions for the creating the account and getting the instruction: 6gxbB27RCNTZpS1RHvL8FgwgwAt5bkgWgryih82NrB5s
 
 ## Task 2 — Mint an NFT with MPL Core
 

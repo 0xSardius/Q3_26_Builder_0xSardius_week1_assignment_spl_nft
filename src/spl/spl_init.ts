@@ -39,7 +39,10 @@ const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
     const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
 
     const msg = createTransactionMessage({ version: 0 });
+
     const msgWithPayer = setTransactionMessageFeePayerSigner(signer, msg);
+
+
     const msgWithLifetime = setTransactionMessageLifetimeUsingBlockhash(
       latestBlockhash,
       msgWithPayer,
@@ -47,16 +50,32 @@ const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
 
     const txMessage = appendTransactionMessageInstructions(
       [
-        // instructions go here
-      ],
-      msgWithLifetime,
-    );
+        // System program: allocate the account, fund it, and assign it to the token program.
+        getCreateAccountInstruction({
+          payer: signer,
+          newAccount: mint,
+          lamports: rent,
+          space,
+          programAddress: TOKEN_PROGRAM_ADDRESS,
+      }),
+
+      // Initialize Mint instruction, with mint address, decimals, and mint authority as the signer.
+      getInitializeMintInstruction({
+        mint: mint.address,
+        decimals: 6,
+        mintAuthority: signer.address,
+      }),
+    
+    ], msgWithLifetime);
 
     const signedTx = await signTransactionMessageWithSigners(txMessage);
+
     assertIsTransactionWithBlockhashLifetime(signedTx);
+
     const signature = getSignatureFromTransaction(signedTx);
 
     const sendAndConfirm = sendAndConfirmTransactionFactory({ rpc, rpcSubscriptions });
+
     await sendAndConfirm(signedTx, { commitment: "confirmed" });
 
     console.log(`Mint created: ${mint.address}`);
