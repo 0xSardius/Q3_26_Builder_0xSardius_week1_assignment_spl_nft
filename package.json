@@ -1,0 +1,34 @@
+{
+  "name": "turbin3-week1-spl-nft",
+  "version": "1.0.0",
+  "description": "Turbin3 Q3 2026 — Week 1: SPL token + MPL Core NFT, written by hand",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest run --reporter=verbose",
+    "typecheck": "tsc --noEmit",
+    "spl:init": "npx ts-node src/spl/01_init.ts",
+    "spl:mint": "npx ts-node src/spl/02_mint.ts",
+    "spl:transfer": "npx ts-node src/spl/03_transfer.ts",
+    "nft:upload": "npx ts-node src/nft/01_upload.ts",
+    "nft:mint": "npx ts-node src/nft/02_mint.ts",
+    "nft:update": "npx ts-node src/nft/03_update.ts",
+    "nft:transfer": "npx ts-node src/nft/04_transfer.ts",
+    "nft:burn": "npx ts-node src/nft/05_burn.ts"
+  },
+  "dependencies": {
+    "@metaplex-foundation/mpl-core": "^1.10.0",
+    "@metaplex-foundation/umi": "^1.5.1",
+    "@metaplex-foundation/umi-bundle-defaults": "^1.5.1",
+    "@metaplex-foundation/umi-uploader-irys": "^1.5.0",
+    "@solana-program/system": "^0.12.0",
+    "@solana-program/token": "^0.13.0",
+    "@solana/kit": "^6.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.0"
+  }
+}

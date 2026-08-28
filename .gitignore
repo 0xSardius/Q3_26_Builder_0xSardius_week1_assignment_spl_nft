@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env*
+.DS_Store
+
+# never commit keypairs
+devnet-wallet.json
+wallet.json
+*.keypair.json
+
+# local run logs
+test-output.txt
