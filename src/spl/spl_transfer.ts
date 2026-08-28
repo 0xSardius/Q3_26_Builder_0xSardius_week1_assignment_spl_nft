@@ -14,7 +14,7 @@
  */
 import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
 
-// paste the mint address from 01_init
+// paste the mint address from spl_init
 const MINT = "";
 // a WALLET address to send to (not a token account)
 const RECIPIENT = "";

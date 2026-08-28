@@ -7,14 +7,14 @@
   "scripts": {
     "test": "vitest run --reporter=verbose",
     "typecheck": "tsc --noEmit",
-    "spl:init": "npx ts-node src/spl/01_init.ts",
-    "spl:mint": "npx ts-node src/spl/02_mint.ts",
-    "spl:transfer": "npx ts-node src/spl/03_transfer.ts",
-    "nft:upload": "npx ts-node src/nft/01_upload.ts",
-    "nft:mint": "npx ts-node src/nft/02_mint.ts",
-    "nft:update": "npx ts-node src/nft/03_update.ts",
-    "nft:transfer": "npx ts-node src/nft/04_transfer.ts",
-    "nft:burn": "npx ts-node src/nft/05_burn.ts"
+    "spl:init": "npx ts-node src/spl/spl_init.ts",
+    "spl:mint": "npx ts-node src/spl/spl_mint.ts",
+    "spl:transfer": "npx ts-node src/spl/spl_transfer.ts",
+    "nft:upload": "npx ts-node src/nft/nft_upload.ts",
+    "nft:mint": "npx ts-node src/nft/nft_mint.ts",
+    "nft:update": "npx ts-node src/nft/nft_update.ts",
+    "nft:transfer": "npx ts-node src/nft/nft_transfer.ts",
+    "nft:burn": "npx ts-node src/nft/nft_burn.ts"
   },
   "dependencies": {
     "@metaplex-foundation/mpl-core": "^1.10.0",

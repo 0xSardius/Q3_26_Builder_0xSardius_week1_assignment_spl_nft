@@ -10,7 +10,7 @@
  */
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste the asset address from 02_mint
+// paste the asset address from nft_mint
 const ASSET = "";
 // a second metadata URI (upload another JSON, or reuse the first one and only change the name)
 const NEW_URI = "";

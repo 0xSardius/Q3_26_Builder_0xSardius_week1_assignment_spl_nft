@@ -9,7 +9,7 @@
  */
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste an asset address (mint a second one with 02_mint — Task 4)
+// paste an asset address (mint a second one with nft_mint — Task 4)
 const ASSET = "";
 // a WALLET address to send to
 const NEW_OWNER = "";

@@ -1,7 +1,7 @@
 /**
  * Task 1b — mint tokens to myself.
  *
- * Goal: 100 tokens in my associated token account for the mint from 01_init.
+ * Goal: 100 tokens in my associated token account for the mint from spl_init.
  *
  * Answer in APPROACH.md before coding:
  *   - Where does a token balance live? (It is not in the mint.)
@@ -12,7 +12,7 @@
  */
 import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
 
-// paste the mint address from 01_init
+// paste the mint address from spl_init
 const MINT = "";
 
 (async () => {

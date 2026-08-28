@@ -2,7 +2,7 @@
  * Task 2 prep — upload the image and the metadata JSON to Irys (devnet).
  *
  * Goal: two URIs — one for assets/orichalcum.jpg, one for a JSON document that
- * points at it — printed so they can be pasted into 02_mint.
+ * points at it — printed so they can be pasted into nft_mint.
  *
  * Answer in APPROACH.md before coding:
  *   - What is the relationship between the image URI, the metadata JSON, and the

@@ -15,7 +15,7 @@
  */
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste the metadata URI from 01_upload
+// paste the metadata URI from nft_upload
 const METADATA_URI = "";
 
 (async () => {
