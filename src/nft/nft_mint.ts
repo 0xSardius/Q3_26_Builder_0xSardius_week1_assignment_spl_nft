@@ -1,26 +1,27 @@
-/**
- * Task 2 — mint an NFT with MPL Core.
- *
- * Goal: a Core asset owned by my wallet, named, pointing at the metadata URI.
- *
- * Answer in APPROACH.md before coding:
- *   - How many accounts does a Core asset need, compared to the SPL flow?
- *     Where do `owner`, `name` and `uri` live?
- *   - Who signs at creation, and why?
- *   - What is the difference between the asset's OWNER and its UPDATE AUTHORITY?
- *     Which one is me by default, and where is that decided?
- *
- * Where to look: @metaplex-foundation/mpl-core exports high-level helpers in
- * dist/src/instructions/ and the account types in dist/src/generated/.
- */
+// Mint an MPL Core asset owned by my wallet.
+// One account — where do owner, name and uri live, and who signs at creation?
+import {
+  createSignerFromKeypair,
+  generateSigner,
+  signerIdentity,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { create, mplCore } from "@metaplex-foundation/mpl-core";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste the metadata URI from nft_upload
-const METADATA_URI = "";
+const umi = createUmi(RPC_URL).use(mplCore());
+const keypair = umi.eddsa.createKeypairFromSecretKey(loadWalletBytes());
+umi.use(signerIdentity(createSignerFromKeypair(umi, keypair)));
+
+// paste the metadata uri from nft_upload
+const metadataUri = "";
 
 (async () => {
   try {
     // your code
+
+    // console.log(`asset: https://core.metaplex.com/explorer/${asset.publicKey}?env=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -1,22 +1,29 @@
-/**
- * Task 5 (ext) — transfer the NFT to another wallet.
- *
- * Answer in APPROACH.md before coding:
- *   - Does the recipient need a token account, SOL, or a signature?
- *   - Who must sign, and what field on the asset does the program check that against?
- *   - After the transfer, who can UPDATE the asset and who can BURN it? Are those the same wallet?
- *   - What happens if you run this script twice?
- */
+// Transfer the asset to another wallet.
+// Does the recipient need anything? After this, who can update it and who can burn it?
+import {
+  createSignerFromKeypair,
+  publicKey,
+  signerIdentity,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { fetchAsset, mplCore, transfer } from "@metaplex-foundation/mpl-core";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste an asset address (mint a second one with nft_mint — Task 4)
-const ASSET = "";
+const umi = createUmi(RPC_URL).use(mplCore());
+const keypair = umi.eddsa.createKeypairFromSecretKey(loadWalletBytes());
+umi.use(signerIdentity(createSignerFromKeypair(umi, keypair)));
+
+// paste an asset address (mint a second one with nft_mint)
+const asset = publicKey("");
 // a WALLET address to send to
-const NEW_OWNER = "";
+const newOwner = publicKey("");
 
 (async () => {
   try {
     // your code
+
+    // console.log(`transferred: https://core.metaplex.com/explorer/${asset}?env=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

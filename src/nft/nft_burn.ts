@@ -1,21 +1,27 @@
-/**
- * Task 6 (ext) — burn the NFT and reclaim the rent.
- *
- * Answer in APPROACH.md before coding:
- *   - Who is allowed to burn? (Owner? Update authority? Both?)
- *   - Where do the lamports go, and which account parameter controls that?
- *   - Predict: after burning, does the account still exist? What would you expect
- *     `getAccountInfo` to return? Write your prediction down, then check it on-chain.
- *   - How much of the original rent comes back, and how would you measure it?
- */
+// Burn the asset and reclaim the rent.
+// Who may burn, where do the lamports go — and does the account still exist afterwards? Predict, then check.
+import {
+  createSignerFromKeypair,
+  publicKey,
+  signerIdentity,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { burn, fetchAsset, mplCore } from "@metaplex-foundation/mpl-core";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
-// paste the asset address to burn (must be owned by the signing wallet)
-const ASSET = "";
+const umi = createUmi(RPC_URL).use(mplCore());
+const keypair = umi.eddsa.createKeypairFromSecretKey(loadWalletBytes());
+umi.use(signerIdentity(createSignerFromKeypair(umi, keypair)));
+
+// paste the asset address to burn (must be owned by this wallet)
+const asset = publicKey("");
 
 (async () => {
   try {
     // your code
+
+    // console.log(`burned: https://explorer.solana.com/address/${asset}?cluster=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

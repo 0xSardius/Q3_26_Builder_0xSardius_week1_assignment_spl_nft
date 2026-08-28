@@ -1,24 +1,37 @@
-/**
- * Task 1a — create a new SPL mint on devnet.
- *
- * Goal: a mint account with 6 decimals, with my wallet as mint authority.
- *
- * Answer in APPROACH.md before coding:
- *   - A mint is an account. Which program must OWN that account, and which program
- *     must CREATE it? Are those the same program?
- *   - How big is a mint account, and how do you find out?
- *   - Why does the new mint's keypair have to sign?
- *
- * Where to look: @solana-program/system and @solana-program/token export one
- * instruction builder per instruction; their types are under
- * node_modules/@solana-program/<pkg>/dist/types/generated/instructions/.
- * Kit's transaction pipeline lives in @solana/kit.
- */
+// Create a new SPL mint (6 decimals, my wallet as mint authority).
+// Two instructions from two programs — decide which does what.
+import {
+  appendTransactionMessageInstructions,
+  assertIsTransactionWithBlockhashLifetime,
+  createKeyPairSignerFromBytes,
+  createSolanaRpc,
+  createSolanaRpcSubscriptions,
+  createTransactionMessage,
+  generateKeyPairSigner,
+  getSignatureFromTransaction,
+  sendAndConfirmTransactionFactory,
+  setTransactionMessageFeePayerSigner,
+  setTransactionMessageLifetimeUsingBlockhash,
+  signTransactionMessageWithSigners,
+} from "@solana/kit";
+import {
+  getInitializeMintInstruction,
+  getMintSize,
+  TOKEN_PROGRAM_ADDRESS,
+} from "@solana-program/token";
+import { getCreateAccountInstruction } from "@solana-program/system";
 import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
+
+const rpc = createSolanaRpc(RPC_URL);
+const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
 
 (async () => {
   try {
+    const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
+
     // your code
+
+    // console.log(`Mint created: ${mint.address}`);
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -1,23 +1,40 @@
-/**
- * Task 1b — mint tokens to myself.
- *
- * Goal: 100 tokens in my associated token account for the mint from spl_init.
- *
- * Answer in APPROACH.md before coding:
- *   - Where does a token balance live? (It is not in the mint.)
- *   - What is an ATA, what are its seeds, and why does that matter for wallets?
- *   - Two instructions are needed. What are they, and why that order?
- *   - The amount is an integer. 100 tokens with 6 decimals is what integer?
- *   - Which account must sign, and what is it proving?
- */
+// Mint 100 tokens into my associated token account.
+// Where does a balance live, and what has to exist before you can mint into it?
+import {
+  address,
+  appendTransactionMessageInstructions,
+  assertIsTransactionWithBlockhashLifetime,
+  createKeyPairSignerFromBytes,
+  createSolanaRpc,
+  createSolanaRpcSubscriptions,
+  createTransactionMessage,
+  getSignatureFromTransaction,
+  sendAndConfirmTransactionFactory,
+  setTransactionMessageFeePayerSigner,
+  setTransactionMessageLifetimeUsingBlockhash,
+  signTransactionMessageWithSigners,
+} from "@solana/kit";
+import {
+  findAssociatedTokenPda,
+  getCreateAssociatedTokenIdempotentInstructionAsync,
+  getMintToInstruction,
+  TOKEN_PROGRAM_ADDRESS,
+} from "@solana-program/token";
 import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
 
+const rpc = createSolanaRpc(RPC_URL);
+const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
+
 // paste the mint address from spl_init
-const MINT = "";
+const mint = address("");
 
 (async () => {
   try {
+    const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
+
     // your code
+
+    // console.log(`mint txid: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -1,23 +1,29 @@
-/**
- * Task 3 — update the NFT's name and metadata URI as the update authority.
- *
- * Answer in APPROACH.md before coding:
- *   - Which role is allowed to do this, and how does the program know I hold it?
- *   - What does NOT change when you update? (Think about ownership and plugins.)
- *   - Security: what would an attacker need in order to rewrite my NFT's metadata?
- *     What does that imply about who should hold update authority on a real collection?
- *   - Why do mpl-core helpers want the fetched asset object rather than just its address?
- */
+// Update the asset's name and uri as its update authority.
+// Which role does the program check, and what stays untouched by an update?
+import {
+  createSignerFromKeypair,
+  publicKey,
+  signerIdentity,
+} from "@metaplex-foundation/umi";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import { fetchAsset, mplCore, update } from "@metaplex-foundation/mpl-core";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { loadWalletBytes, RPC_URL } from "../wallet";
 
+const umi = createUmi(RPC_URL).use(mplCore());
+const keypair = umi.eddsa.createKeypairFromSecretKey(loadWalletBytes());
+umi.use(signerIdentity(createSignerFromKeypair(umi, keypair)));
+
 // paste the asset address from nft_mint
-const ASSET = "";
-// a second metadata URI (upload another JSON, or reuse the first one and only change the name)
-const NEW_URI = "";
+const asset = publicKey("");
+// a new metadata uri (or reuse the old one and only change the name)
+const newUri = "";
 
 (async () => {
   try {
     // your code
+
+    // console.log(`updated: https://core.metaplex.com/explorer/${asset}?env=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

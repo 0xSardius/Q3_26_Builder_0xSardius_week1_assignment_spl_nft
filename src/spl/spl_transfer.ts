@@ -1,27 +1,42 @@
-/**
- * Task 1c — transfer tokens to another wallet.
- *
- * Goal: 10 tokens move from my ATA to the recipient's ATA.
- *
- * Answer in APPROACH.md before coding:
- *   - The recipient may not have a token account yet. Who creates it, who pays,
- *     and does the recipient need to sign anything?
- *   - What does the "Checked" variant of transfer verify that the plain one doesn't?
- *     What goes wrong without it?
- *   - What must the recipient address be — a wallet, or a token account? What
- *     happens if you pass the wrong kind?
- *   - Security: what stops someone else from moving my tokens with this same code?
- */
+// Transfer 10 tokens from my ATA to another wallet's ATA.
+// The recipient may have no token account yet — who handles that, and who pays?
+import {
+  address,
+  appendTransactionMessageInstructions,
+  assertIsTransactionWithBlockhashLifetime,
+  createKeyPairSignerFromBytes,
+  createSolanaRpc,
+  createSolanaRpcSubscriptions,
+  createTransactionMessage,
+  getSignatureFromTransaction,
+  sendAndConfirmTransactionFactory,
+  setTransactionMessageFeePayerSigner,
+  setTransactionMessageLifetimeUsingBlockhash,
+  signTransactionMessageWithSigners,
+} from "@solana/kit";
+import {
+  findAssociatedTokenPda,
+  getCreateAssociatedTokenIdempotentInstructionAsync,
+  getTransferCheckedInstruction,
+  TOKEN_PROGRAM_ADDRESS,
+} from "@solana-program/token";
 import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
 
+const rpc = createSolanaRpc(RPC_URL);
+const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
+
 // paste the mint address from spl_init
-const MINT = "";
+const mint = address("");
 // a WALLET address to send to (not a token account)
-const RECIPIENT = "";
+const to = address("");
 
 (async () => {
   try {
+    const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
+
     // your code
+
+    // console.log(`transfer txid: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);
