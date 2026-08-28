@@ -29,9 +29,38 @@ const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
   try {
     const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
 
-    // your code
+    // Create a new keypair for the mint account
+    const mint = await generateKeyPairSigner();
 
-    // console.log(`Mint created: ${mint.address}`);
+    const space = BigInt(getMintSize());
+
+    const rent = await rpc.getMinimumBalanceForRentExemption(space).send();
+
+    const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
+
+    const msg = createTransactionMessage({ version: 0 });
+    const msgWithPayer = setTransactionMessageFeePayerSigner(signer, msg);
+    const msgWithLifetime = setTransactionMessageLifetimeUsingBlockhash(
+      latestBlockhash,
+      msgWithPayer,
+    );
+
+    const txMessage = appendTransactionMessageInstructions(
+      [
+        // instructions go here
+      ],
+      msgWithLifetime,
+    );
+
+    const signedTx = await signTransactionMessageWithSigners(txMessage);
+    assertIsTransactionWithBlockhashLifetime(signedTx);
+    const signature = getSignatureFromTransaction(signedTx);
+
+    const sendAndConfirm = sendAndConfirmTransactionFactory({ rpc, rpcSubscriptions });
+    await sendAndConfirm(signedTx, { commitment: "confirmed" });
+
+    console.log(`Mint created: ${mint.address}`);
+    console.log(`tx: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);

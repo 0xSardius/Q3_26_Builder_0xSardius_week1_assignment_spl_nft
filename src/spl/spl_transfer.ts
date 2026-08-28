@@ -34,9 +34,32 @@ const to = address("");
   try {
     const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
 
-    // your code
+    // your code (derive what you need first)
 
-    // console.log(`transfer txid: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
+    const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
+
+    const msg = createTransactionMessage({ version: 0 });
+    const msgWithPayer = setTransactionMessageFeePayerSigner(signer, msg);
+    const msgWithLifetime = setTransactionMessageLifetimeUsingBlockhash(
+      latestBlockhash,
+      msgWithPayer,
+    );
+
+    const txMessage = appendTransactionMessageInstructions(
+      [
+        // instructions go here
+      ],
+      msgWithLifetime,
+    );
+
+    const signedTx = await signTransactionMessageWithSigners(txMessage);
+    assertIsTransactionWithBlockhashLifetime(signedTx);
+    const signature = getSignatureFromTransaction(signedTx);
+
+    const sendAndConfirm = sendAndConfirmTransactionFactory({ rpc, rpcSubscriptions });
+    await sendAndConfirm(signedTx, { commitment: "confirmed" });
+
+    console.log(`transfer txid: https://explorer.solana.com/tx/${signature}?cluster=devnet`);
   } catch (error) {
     console.error(error);
     process.exit(1);
