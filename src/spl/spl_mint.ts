@@ -61,8 +61,8 @@ const mint = address("6gxbB27RCNTZpS1RHvL8FgwgwAt5bkgWgryih82NrB5s");
 
         getMintToInstruction({
           mint,
-          associatedTokenAddress: ata,
-          authority: signer,
+          token: ata,
+          mintAuthority: signer,
           amount,
         }),
       ],
