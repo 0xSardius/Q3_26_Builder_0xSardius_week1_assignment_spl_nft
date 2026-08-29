@@ -29,6 +29,12 @@ Template for each task:
 - spl_init creates an SPL token mint. THe signature authorizes the creation of a keypair that can be used to create a mint account.
 - The mint account needs to know the size determind by the token program.
 - the person establishing the account pays the rent, and it is received by the account owner. 
+- Where will the 100 tokens live? - they will live in the token account, which is associated with the mint account, and the owner of the wallet that holds the balance in the account
+- The ATA is a specific PDA whose seeds are fixed by the associated Token Program: [ owner, tokenProgram, mint]. They are fixed so any wallet, explorer, or exchange can compute your "USDC account" (for example) from just your address, with no lookup. I Believe getCreateAssociatedTokenIdempotentInstructionAsync creates it. Idempotent variant succeeds silently if the account exists, and creates it if not. 
+- InitializeMint stored your address as the authority. MintTo has to prove the caller is that authority, the proof on Solana is a signature. So the slot needs a signer object, not the address.
+- It should be 100,000,000 base units if we are using 100 with 6 decimals, or 100n * 10n ** 6n
+- Not clear on the instructions, may need to review this piece
+
 
 ### After
 Successfully created both instructions for the creating the account and getting the instruction: 6gxbB27RCNTZpS1RHvL8FgwgwAt5bkgWgryih82NrB5s
@@ -36,6 +42,8 @@ Successfully created both instructions for the creating the account and getting 
 ## Task 2 — Mint an NFT with MPL Core
 
 ### Before
+
+4. 
 
 ### After
 

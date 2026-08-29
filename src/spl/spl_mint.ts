@@ -25,14 +25,21 @@ import { loadWalletBytes, RPC_URL, WS_URL } from "../wallet";
 const rpc = createSolanaRpc(RPC_URL);
 const rpcSubscriptions = createSolanaRpcSubscriptions(WS_URL);
 
-// paste the mint address from spl_init
-const mint = address("");
+// mint address from spl_init
+const mint = address("6gxbB27RCNTZpS1RHvL8FgwgwAt5bkgWgryih82NrB5s");
 
 (async () => {
   try {
     const signer = await createKeyPairSignerFromBytes(loadWalletBytes());
 
+    const amount = 100n * 10n ** 6n;
+
     // your code (derive what you need first)
+    const [ata] = await findAssociatedTokenPda({
+      owner: signer.address,
+      tokenProgram: TOKEN_PROGRAM_ADDRESS,
+      mint,
+    });
 
     const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
 
@@ -45,7 +52,19 @@ const mint = address("");
 
     const txMessage = appendTransactionMessageInstructions(
       [
-        // instructions go here
+        await getCreateAssociatedTokenIdempotentInstructionAsync({
+          payer: signer,
+          mint,
+          owner: signer.address,
+          tokenProgram: TOKEN_PROGRAM_ADDRESS,
+        }),
+
+        getMintToInstruction({
+          mint,
+          associatedTokenAddress: ata,
+          authority: signer,
+          amount,
+        }),
       ],
       msgWithLifetime,
     );
