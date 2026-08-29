@@ -38,6 +38,8 @@ Template for each task:
 
 ### After
 Successfully created both instructions for the creating the account and getting the instruction: 6gxbB27RCNTZpS1RHvL8FgwgwAt5bkgWgryih82NrB5s
+- hit some type errors in the instructions I managed to solve by right clicking into the node_module pacakage and understanding the types, this was great at understanding what was required fast and why
+- the Idempotent instruction also needed await, I ran into errors before I debugged and figured this out.
 
 ## Task 2 — Mint an NFT with MPL Core
 
